@@ -1,7 +1,6 @@
 package com.dalarionit.kafka_file_ingester
 
 import cats.effect.IO
-import com.dalarionit.kafka_file_ingester.model.KafkaProducerStub
 import fs2.io.file.{Files, Path}
 import fs2.text
 import org.typelevel.log4cats.StructuredLogger

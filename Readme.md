@@ -42,7 +42,8 @@ INPUT_FILE=data/input.csv KAFKA_TOPIC=my-topic sbt run
 src/
 ├── Main.scala           // Entry point, loads config, starts ingestion
 ├── FileIngester.scala   // Streaming logic to read and process file lines
-└── KafkaProducerStub.scala // Stub simulating Kafka publishing (to be replaced)
+├── KafkaProducerStub.scala // Stub simulating Kafka publishing (to be replaced)
+├── ValidationSchema.scala // JSON validation and transformation logic
 ```
 
 ---
@@ -57,7 +58,7 @@ src/
 
 ## 🔜 TODO / Ideas
 - [ ] Swap stub with `fs2-kafka` integration
-- [ ] Add JSON validation and transformation layer (e.g. circe)
+- [x] Add JSON validation and transformation layer (e.g. circe)
 - [ ] Add retry / error handling / skip logic
 - [ ] Dockerize with `docker-compose.yml` + Kafka broker
 - [ ] Add property-based tests and schema samples
