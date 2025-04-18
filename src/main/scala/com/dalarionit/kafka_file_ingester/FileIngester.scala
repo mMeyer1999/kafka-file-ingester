@@ -7,6 +7,8 @@ import io.circe.parser
 import org.typelevel.log4cats.StructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 
+import com.dalarionit.kafka_file_ingester.util.Ansi._
+
 object FileIngester {
 
   given logger: StructuredLogger[IO] = Slf4jLogger.getLogger[IO]
@@ -21,11 +23,11 @@ object FileIngester {
         .evalMap { line =>
           parser.parse(line) match
             case Left(err) =>
-              logger.warn(s"Failed to parse line: $err")
+              logger.warn(s"${red}Failed to parse line: $err")
             case Right(json) if !schema.validate(json) =>
-              logger.warn(s"JSON validation failed for line: $line")
+              logger.warn(s"${yellow}JSON validation failed for line: $line")
             case Right(validJson) =>
-              logger.info(s"Ingesting valid JSON: ${validJson.spaces2}") *> producer.send(validJson.noSpaces)
+              logger.info(s"${blue}Ingesting valid JSON: ${validJson.spaces2}") *> producer.send(validJson.noSpaces)
         }
         .compile
         .drain
