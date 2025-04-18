@@ -17,6 +17,7 @@ object Main extends IOApp {
   override def run(args: List[String]): IO[ExitCode] = {
     val filePath = sys.env.getOrElse("FILE_PATH", "data/input.csv")
     val kafkaTopic = sys.env.getOrElse("KAFKA_TOPIC", "default-topic")
+    val schema = sys.env.getOrElse("SCHEMA", "data/schema.json")
 
     for {
       _ <- logger.info(s"Starting processing file from $filePath into Kafka topic $kafkaTopic.")
