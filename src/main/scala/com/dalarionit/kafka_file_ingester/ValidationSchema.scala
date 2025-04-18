@@ -39,8 +39,8 @@ object ValidationSchema {
       .compile
       .string
       .flatMap { schema =>
-        parse(schema).flatMap(_.as[ValidationSchema]) match
-          case Right(validationSchema) => IO.pure(validationSchema)
+        parse(schema).flatMap(_.as[List[ValidationRule]]) match
+          case Right(rules) => IO.pure(ValidationSchema(rules))
           case Left(error) =>
             IO.raiseError(new Exception(s"Failed to parse schema: $error"))
       }

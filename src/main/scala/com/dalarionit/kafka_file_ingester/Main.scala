@@ -15,13 +15,13 @@ object Main extends IOApp {
   given logger: StructuredLogger[IO] = Slf4jLogger.getLogger[IO]
 
   override def run(args: List[String]): IO[ExitCode] = {
-    val filePath = sys.env.getOrElse("FILE_PATH", "data/input.csv")
+    val filePath = sys.env.getOrElse("FILE_PATH", "data/input.ndjson")
     val kafkaTopic = sys.env.getOrElse("KAFKA_TOPIC", "default-topic")
     val schema = sys.env.getOrElse("SCHEMA", "data/schema.json")
 
     for {
       _ <- logger.info(s"Starting processing file from $filePath into Kafka topic $kafkaTopic.")
-      _ <- FileIngester.processFile(Path(filePath), kafkaTopic)
+      _ <- FileIngester.processFile(Path(filePath), kafkaTopic, Path(schema))
       _ <- logger.info("File processing completed.")
     } yield ExitCode.Success
   }
